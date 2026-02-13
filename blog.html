@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Picpea Studio | Original Micro Drama Series</title>
+<meta name="build" content="20260211_v3b"/>
+<link rel="preload" as="image" href="assets/pea.webp?v=20260211_1" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/pea.png?v=20260211_1" type="image/png" fetchpriority="high">
+
+<link rel="stylesheet" href="styles.20260211_1.css"/>
+<link rel="stylesheet" href="mobile.20260211_1.css" media="(max-width: 768px)">
+
+<style id="pea-modal-inline">
+/* Critical fixes: keep modal as overlay everywhere */
+#subscribeModal.modal{position:fixed;inset:0;display:none;z-index:9999;}
+#subscribeModal.modal.is-open{display:block;}
+#subscribeModal .modal__backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);}
+#subscribeModal .modal__panel{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(520px, calc(100vw - 32px));
+  background:#0d0d0d;border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55);
+  color:#fff;
+}
+#subscribeModal .modal__header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);}
+#subscribeModal .modal__title{font-weight:700;font-size:16px;}
+#subscribeModal .modal__close{background:transparent;border:0;color:#fff;font-size:22px;line-height:1;cursor:pointer;opacity:.85}
+#subscribeModal .modal__close:hover{opacity:1}
+#subscribeModal .modal__body{padding:14px 16px 16px;}
+#subscribeModal .modal__text{margin:0 0 12px;opacity:.85}
+#subscribeModal .subscribe{display:flex;gap:10px;align-items:center;margin:8px 0 10px;}
+#subscribeModal .subscribe__input{
+  flex:1;min-width:0;padding:12px 12px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#fff;
+}
+#subscribeModal .subscribe__input::placeholder{color:rgba(255,255,255,.55)}
+#subscribeModal .subscribe__btn{
+  padding:12px 14px;border-radius:12px;border:0;cursor:pointer;
+  background:#7CFF3A;color:#041b02;font-weight:700;
+}
+#subscribeModal .modal__hint{opacity:.7;font-size:13px;margin-top:6px}
+#subscribeModal .modal__toast{margin-top:10px;opacity:0;transform:translateY(6px);transition:all .2s ease;font-size:13px}
+#subscribeModal .modal__toast.is-on{opacity:.95;transform:translateY(0)}
+@media (max-width:768px){
+  #subscribeModal .modal__panel{top:auto;bottom:12px;transform:translate(-50%,0);border-radius:18px;}
+}
+
+/* Force pea avatar visible on mobile; hide Log in pill if present */
+@media (max-width:768px){
+  #peaAvatar{display:grid !important;}
+  /* If there is a Log in button, hide it so pea takes its place */
+  #loginBtn{display:none !important;}
+}
+
+/* Pea hover/tap */
+#peaAvatar{overflow:hidden;transition:transform .2s cubic-bezier(0.34,1.56,0.64,1);}
+#peaAvatar:hover{transform:scale(1.1);}
+#peaAvatar:active{transform:scale(1.08);}
+#peaAvatar img{width:100%;height:100%;object-fit:cover;display:block;}
+</style>
+
+
+<style id="blog-logo-fix">
+/* Blog mobile logo failsafe */
+.logo{width:56px;height:56px;display:inline-block !important;flex:0 0 auto !important;}
+.logo img{width:100% !important;height:100% !important;object-fit:contain !important;border-radius:14px;display:block;}
+@media (max-width:768px){
+  .logo{width:64px;height:64px;}
+}
+</style>
+
+
+<style id="pea-size-inline">
+/* Force pea size on desktop (inline + !important to beat cache/overrides) */
+@media (min-width:769px){
+  #peaFab, #peaAvatar, .pea-avatar, .peaIcon, .pea-icon, .avatar{
+    width:56px !important;
+    height:56px !important;
+  }
+  #peaFab img, #peaAvatar img, .pea-avatar img, .avatar img{
+    width:100% !important;
+    height:100% !important;
+  }
+}
+</style>
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3">
+  <link rel="manifest" href="/site.webmanifest?v=3">
+  <meta name="theme-color" content="#0f0f0f">
+</head>
+<body>
+<header class="header">
+  <div class="header__inner">
+    <a class="logo" href="index.html" aria-label="Picpea home"><img src="assets/logo.png" alt="Picpea"/></a>
+    <nav class="nav">
+      <a class="nav__item" href="index.html">HOME</a>
+      <span class="nav__sep">|</span>
+      <a class="nav__item nav__item--active" href="blog.html">Blog</a>
+    </nav>
+    <div class="top-actions">
+      <a class="btn btn--download" href="#">Download App</a>
+      <button aria-label="Subscribe" class="avatar pea-avatar" type="button" id="peaAvatar"><picture><source srcset="assets/pea.webp?v=20260211_1" type="image/webp"><img src="assets/pea.png?v=20260211_1" alt="Picpea mascot" loading="eager" decoding="async" fetchpriority="high"></picture></button>
+    </div>
+  </div>
+</header>
+
+<main class="page" style="padding: 24px 16px; max-width: 980px; margin: 0 auto;">
+  <h1 style="margin:0 0 10px;">Blog</h1>
+  <p style="opacity:.8; margin:0 0 18px;">We’re starting the blog while the first video is cooking. 🍿</p>
+
+  <article style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:16px; margin-bottom:14px;">
+    <h2 style="margin:0 0 6px; font-size:18px;">Welcome to Picpea</h2>
+    <div style="opacity:.7; font-size:13px; margin-bottom:10px;">Feb 2026</div>
+    <p style="margin:0; opacity:.85;">Micro dramas. Big feelings. We’ll share behind-the-scenes notes, drops, and updates here until the first video lands.</p>
+  </article>
+
+  <article style="background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.10); border-radius:16px; padding:16px;">
+    <h2 style="margin:0 0 6px; font-size:18px;">What’s coming soon?</h2>
+    <div style="opacity:.7; font-size:13px; margin-bottom:10px;">Feb 2026</div>
+    <p style="margin:0; opacity:.85;">New originals, re-makes, and some very chaotic office comedy. Stay tuned.</p>
+  </article>
+</main>
+
+<!-- Reuse same subscribe modal -->
+
+<div class="modal" id="contactModal" aria-hidden="true">
+  <div class="modal__backdrop" data-close-contact="1"></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+    <div class="modal__header">
+      <div class="modal__title" id="contactTitle">Contact us</div>
+      <button class="modal__close" type="button" aria-label="Close" data-close="1">×</button>
+    </div>
+    <div class="modal__body">
+      <p class="modal__text">Reach us anytime:</p>
+      
+      <div class="modal__contact">
+        <div class="modal__contactRow">
+          <span class="modal__contactLabel">User Support</span>
+          <span class="modal__dot">•</span>
+          <a class="modal__contactLink" href="mailto:support@picpeastudio.com">support@picpeastudio.com</a>
+          <button class="modal__copyBtn" type="button" data-copy-btn="support@picpeastudio.com" aria-label="Copy email"><span>Copy</span></button>
+        </div>
+        <div class="modal__contactRow">
+          <span class="modal__contactLabel">Contact for Business</span>
+          <span class="modal__dot">•</span>
+          <a class="modal__contactLink" href="mailto:business@picpeastudio.com">business@picpeastudio.com</a>
+          <button class="modal__copyBtn" type="button" data-copy-btn="business@picpeastudio.com" aria-label="Copy email"><span>Copy</span></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="subscribeModal" aria-hidden="true">
+  <div class="modal__backdrop" data-close="1"></div>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="subscribeTitle">
+    <div class="modal__header">
+      <div class="modal__title" id="subscribeTitle">Stay in the loop</div>
+      <button class="modal__close" type="button" aria-label="Close" data-close="1">×</button>
+    </div>
+    <div class="modal__body">
+      <p class="modal__text">Drop your email and we’ll start building the subscriber list for launches & drops.</p>
+      <form id="subscribeForm" class="subscribe">
+        <input class="subscribe__input" type="email" id="subscribeEmail" placeholder="you@email.com" required autocomplete="email">
+        <button class="subscribe__btn" type="submit">Subscribe</button>
+      </form>
+      <div class="modal__hint">We’ll only use your email for Picpea updates.</div>
+      <div class="modal__toast" id="subToast" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  const avatar = document.getElementById('peaAvatar');
+  const loginBtn = document.getElementById('loginBtn');
+  const modal = document.getElementById('subscribeModal');
+  const contactModal = document.getElementById('contactModal');
+  const contactLink = document.getElementById('contactLink');
+  const form = document.getElementById('subscribeForm');
+  const emailInput = document.getElementById('subscribeEmail');
+  const toast = document.getElementById('subToast');
+
+  function getSubs(){ try { return JSON.parse(localStorage.getItem('pp_subscribers') || '[]'); } catch(e){ return []; } }
+  function setSubs(arr){ try { localStorage.setItem('pp_subscribers', JSON.stringify(arr)); } catch(e){} }
+  function openModal(){
+    document.body.style.overflow='hidden'; modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); setTimeout(()=>emailInput.focus(), 50); }
+  
+  function openContact(){
+    document.body.style.overflow='hidden';
+    if(!contactModal) return;
+    contactModal.classList.add('is-open');
+    contactModal.setAttribute('aria-hidden','false');
+  }
+  function closeContact(){
+    document.body.style.overflow='';
+    if(!contactModal) return;
+    contactModal.classList.remove('is-open');
+    contactModal.setAttribute('aria-hidden','true');
+  }
+
+      // Contact modal close (X / overlay / ESC)
+      const contactCloseBtn = contactModal && contactModal.querySelector('[data-close-contact]');
+      if (contactCloseBtn) contactCloseBtn.addEventListener('click', closeContact);
+      if (contactModal) contactModal.addEventListener('click', (e) => {
+        if (e.target === contactModal) closeContact();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && contactModal && contactModal.classList.contains('is-open')) closeContact();
+      });
+
+  function closeModal(){
+    document.body.style.overflow=''; modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true'); }
+  function flash(msg){ toast.textContent = msg; toast.classList.add('is-on'); clearTimeout(toast.__t); toast.__t=setTimeout(()=>toast.classList.remove('is-on'),1800); }
+
+  avatar && avatar.addEventListener('click', openModal);
+  modal && modal.addEventListener('click', (e)=>{ if(e.target && e.target.getAttribute('data-close')==='1') closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+
+  form && form.addEventListener('submit', (e)=>{ e.preventDefault(); const email=(emailInput.value||'').trim(); if(!email) return;
+    const arr=getSubs(); if(arr.indexOf(email)===-1) arr.push(email); setSubs(arr); emailInput.value=''; flash('Saved! ✨');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  const contactModal = document.getElementById('contactModal');
+  const contactLink = document.getElementById('contactLink');
+
+  function openContact(){
+    if(!contactModal) return;
+    contactModal.classList.add('is-open');
+    contactModal.setAttribute('aria-hidden','false');
+  }
+  function closeContact(){
+    if(!contactModal) return;
+    contactModal.classList.remove('is-open');
+    contactModal.setAttribute('aria-hidden','true');
+  }
+
+  if(contactLink){
+    contactLink.addEventListener('click', function(e){
+      e.preventDefault();
+      openContact();
+    });
+  }
+
+  if(contactModal){
+    contactModal.addEventListener('click', function(e){
+      const closeEl = e.target && (e.target.closest ? e.target.closest('[data-close="1"]') : null);
+      if(closeEl) closeContact();
+    });
+  }
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      if(contactModal && contactModal.classList.contains('is-open')) closeContact();
+    }
+  });
+
+  const toast = document.getElementById('subToast');
+  let toastTimer = null;
+  function flash(msg){
+    if(!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>toast.classList.remove('show'), 1200);
+  }
+
+  async function copyToClipboard(text){
+    try{
+      if(navigator.clipboard && window.isSecureContext){
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    }catch(e){}
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){ return false; }
+  }
+
+  document.addEventListener('click', async function(e){
+    const btn = e.target && e.target.closest && e.target.closest('[data-copy-btn]');
+    if(!btn) return;
+    e.preventDefault();
+    const val = btn.getAttribute('data-copy-btn');
+    if(!val) return;
+    const ok = await copyToClipboard(val);
+    flash(ok ? 'Copied! ✅' : 'Copy failed');
+    btn.classList.remove('copied');
+    // trigger micro pop
+    void btn.offsetWidth;
+    btn.classList.add('copied');
+    setTimeout(()=>btn.classList.remove('copied'), 220);
+  });
+})();
+</script>
+
+</body>
+</html>
